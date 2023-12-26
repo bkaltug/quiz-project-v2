@@ -2,14 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:quiz/screens/question_page.dart';
 
 class OpeningPage extends StatefulWidget {
-  const OpeningPage({super.key});
+  const OpeningPage({super.key, int highestScore = 0})
+      // ignore: prefer_initializing_formals
+      : highestScore = highestScore;
+  final int highestScore;
 
   @override
   State<OpeningPage> createState() => _OpeningPageState();
 }
 
 class _OpeningPageState extends State<OpeningPage> {
-  int score = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,7 +53,7 @@ class _OpeningPageState extends State<OpeningPage> {
           Positioned(
             top: MediaQuery.of(context).size.height / 1.6,
             child: Text(
-              "$score /10",
+              "${widget.highestScore} /10",
               textAlign: TextAlign.center,
               style: const TextStyle(fontSize: 20),
             ),
