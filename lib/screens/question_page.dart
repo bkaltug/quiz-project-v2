@@ -31,7 +31,7 @@ class _QuestionPageState extends State<QuestionPage> {
 
   Future api() async {
     final response = await http.get(Uri.parse(
-        "https://opentdb.com/api.php?amount=10&category=24&difficulty=medium&type=multiple"));
+        "https://opentdb.com/api.php?amount=10&category=27&difficulty=easy&type=multiple"));
 
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body)['results'];
@@ -47,6 +47,7 @@ class _QuestionPageState extends State<QuestionPage> {
               data[i - 1]["incorrect_answers"][2]
             ]
           });
+          answerList[i - 1]["Answers of question $i"]!.shuffle();
         }
       });
     }
@@ -103,6 +104,13 @@ class _QuestionPageState extends State<QuestionPage> {
                       children: [
                         InkWell(
                           onTap: () => setState(() {
+                            if (answerList[questionNumber - 1][
+                                        "Answers of question $questionNumber"]![
+                                    0] ==
+                                responseData[questionNumber - 1]
+                                    ["correct_answer"]) {
+                              correctAnswerCounter++;
+                            }
                             onTappedA = !onTappedA;
                             onTappedB = false;
                             onTappedC = false;
@@ -119,6 +127,13 @@ class _QuestionPageState extends State<QuestionPage> {
                         ),
                         InkWell(
                           onTap: () => setState(() {
+                            if (answerList[questionNumber - 1][
+                                        "Answers of question $questionNumber"]![
+                                    1] ==
+                                responseData[questionNumber - 1]
+                                    ["correct_answer"]) {
+                              correctAnswerCounter++;
+                            }
                             onTappedA = false;
                             onTappedB = !onTappedB;
                             onTappedC = false;
@@ -135,6 +150,14 @@ class _QuestionPageState extends State<QuestionPage> {
                         ),
                         InkWell(
                           onTap: () => setState(() {
+                            if (answerList[questionNumber - 1][
+                                        "Answers of question $questionNumber"]![
+                                    2] ==
+                                responseData[questionNumber - 1]
+                                    ["correct_answer"]) {
+                              correctAnswerCounter++;
+                            }
+
                             onTappedA = false;
                             onTappedB = false;
                             onTappedC = !onTappedC;
@@ -151,6 +174,14 @@ class _QuestionPageState extends State<QuestionPage> {
                         ),
                         InkWell(
                           onTap: () => setState(() {
+                            if (answerList[questionNumber - 1][
+                                        "Answers of question $questionNumber"]![
+                                    3] ==
+                                responseData[questionNumber - 1]
+                                    ["correct_answer"]) {
+                              correctAnswerCounter++;
+                            }
+
                             onTappedA = false;
                             onTappedB = false;
                             onTappedC = false;
@@ -168,28 +199,31 @@ class _QuestionPageState extends State<QuestionPage> {
                       height: 50,
                     ),
                     InkWell(
-                        onTap: () {
-                          setState(() {
-                            if (onTappedA) {
-                              correctAnswerCounter++;
-                            }
-                            onTappedA = false;
-                            onTappedB = false;
-                            onTappedC = false;
-                            onTappedD = false;
+                        onTap: onTappedA == false &&
+                                onTappedB == false &&
+                                onTappedC == false &&
+                                onTappedD == false
+                            ? () {}
+                            : () {
+                                setState(() {
+                                  onTappedA = false;
+                                  onTappedB = false;
+                                  onTappedC = false;
+                                  onTappedD = false;
 
-                            if (questionNumber == 10) {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => OpeningPage(
-                                            highestScore: correctAnswerCounter,
-                                          )));
-                            } else {
-                              questionNumber++;
-                            }
-                          });
-                        },
+                                  if (questionNumber == 10) {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => OpeningPage(
+                                                  highestScore:
+                                                      correctAnswerCounter,
+                                                )));
+                                  } else {
+                                    questionNumber++;
+                                  }
+                                });
+                              },
                         child: Container(
                           alignment: Alignment.center,
                           margin: const EdgeInsets.symmetric(horizontal: 5),
