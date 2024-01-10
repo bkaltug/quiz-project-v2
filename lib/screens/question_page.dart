@@ -5,7 +5,8 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class QuestionPage extends StatefulWidget {
-  const QuestionPage({super.key});
+  const QuestionPage({super.key, required this.category});
+  final String category;
 
   @override
   State<QuestionPage> createState() => _QuestionPageState();
@@ -18,6 +19,7 @@ class _QuestionPageState extends State<QuestionPage> {
   bool onTappedB = false;
   bool onTappedC = false;
   bool onTappedD = false;
+  String categoryUrl = "";
 
   List responseData = [];
   List<Map<String, String>> questionList = [];
@@ -27,11 +29,17 @@ class _QuestionPageState extends State<QuestionPage> {
   void initState() {
     super.initState();
     api();
+    if (widget.category == "Animals") {
+      categoryUrl =
+          "https://opentdb.com/api.php?amount=10&category=20&difficulty=medium&type=multiple";
+    } else if (widget.category == "Celebrities") {
+      categoryUrl =
+          "https://opentdb.com/api.php?amount=10&category=20&difficulty=medium&type=multiple";
+    }
   }
 
   Future api() async {
-    final response = await http.get(Uri.parse(
-        "https://opentdb.com/api.php?amount=10&category=27&difficulty=easy&type=multiple"));
+    var response = await http.get(Uri.parse(categoryUrl));
 
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body)['results'];

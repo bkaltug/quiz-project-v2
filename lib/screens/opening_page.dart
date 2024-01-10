@@ -12,6 +12,8 @@ class OpeningPage extends StatefulWidget {
 }
 
 class _OpeningPageState extends State<OpeningPage> {
+  String dropDownValue = "Animals";
+  String category = "Animals";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,7 +45,7 @@ class _OpeningPageState extends State<OpeningPage> {
             ),
           ),
           Positioned(
-            top: MediaQuery.of(context).size.height / 1.7,
+            top: MediaQuery.of(context).size.height / 2,
             child: const Text(
               "Highest Score",
               textAlign: TextAlign.center,
@@ -51,13 +53,32 @@ class _OpeningPageState extends State<OpeningPage> {
             ),
           ),
           Positioned(
-            top: MediaQuery.of(context).size.height / 1.6,
+            top: MediaQuery.of(context).size.height / 1.8,
             child: Text(
               "${widget.highestScore} /10",
               textAlign: TextAlign.center,
               style: const TextStyle(fontSize: 20),
             ),
           ),
+          Positioned(
+              top: MediaQuery.of(context).size.height / 1.45,
+              child: DropdownButton<String>(
+                hint: const Text("Category"),
+                value: dropDownValue,
+                onChanged: (String? newValue) {
+                  setState(() {
+                    dropDownValue = newValue!;
+                    category = newValue;
+                  });
+                },
+                items: ['Animals', 'Celebrities']
+                    .map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+              )),
           Positioned(
             left: MediaQuery.of(context).size.width / 4,
             right: MediaQuery.of(context).size.width / 4,
@@ -66,7 +87,9 @@ class _OpeningPageState extends State<OpeningPage> {
                 onPressed: () => Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const QuestionPage())),
+                        builder: (context) => QuestionPage(
+                              category: category,
+                            ))),
                 child: const Text("Start Quiz")),
           )
         ],
