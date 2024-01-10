@@ -47,13 +47,13 @@ class _OpeningPageState extends State<OpeningPage> {
           Positioned(
             top: MediaQuery.of(context).size.height / 2,
             child: const Text(
-              "Highest Score",
+              "Latest Score",
               textAlign: TextAlign.center,
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
             ),
           ),
           Positioned(
-            top: MediaQuery.of(context).size.height / 1.8,
+            top: MediaQuery.of(context).size.height / 1.83,
             child: Text(
               "${widget.highestScore} /10",
               textAlign: TextAlign.center,
@@ -61,7 +61,18 @@ class _OpeningPageState extends State<OpeningPage> {
             ),
           ),
           Positioned(
-              top: MediaQuery.of(context).size.height / 1.45,
+            top: MediaQuery.of(context).size.height / 1.5,
+            child: const Text(
+              "Select Category",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
+            ),
+          ),
+          Positioned(
+              top: MediaQuery.of(context).size.height / 1.41,
               child: DropdownButton<String>(
                 hint: const Text("Category"),
                 value: dropDownValue,
@@ -71,8 +82,15 @@ class _OpeningPageState extends State<OpeningPage> {
                     category = newValue;
                   });
                 },
-                items: ['Animals', 'Celebrities']
-                    .map<DropdownMenuItem<String>>((String value) {
+                items: [
+                  'Animals',
+                  'Art',
+                  'Celebrities',
+                  'Geography',
+                  'History',
+                  'Mythology',
+                  'Sports'
+                ].map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
                     child: Text(value),

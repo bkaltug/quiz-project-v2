@@ -28,14 +28,29 @@ class _QuestionPageState extends State<QuestionPage> {
   @override
   void initState() {
     super.initState();
-    api();
     if (widget.category == "Animals") {
       categoryUrl =
-          "https://opentdb.com/api.php?amount=10&category=20&difficulty=medium&type=multiple";
+          "https://opentdb.com/api.php?amount=10&category=27&difficulty=easy&type=multiple";
+    } else if (widget.category == "Art") {
+      categoryUrl =
+          "https://opentdb.com/api.php?amount=10&category=25&difficulty=easy&type=multiple";
     } else if (widget.category == "Celebrities") {
       categoryUrl =
+          "https://opentdb.com/api.php?amount=10&category=26&difficulty=medium&type=multiple";
+    } else if (widget.category == "Mythology") {
+      categoryUrl =
           "https://opentdb.com/api.php?amount=10&category=20&difficulty=medium&type=multiple";
+    } else if (widget.category == "History") {
+      categoryUrl =
+          "https://opentdb.com/api.php?amount=10&category=23&difficulty=easy&type=multiple";
+    } else if (widget.category == "Geography") {
+      categoryUrl =
+          "https://opentdb.com/api.php?amount=10&category=22&difficulty=easy&type=multiple";
+    } else if (widget.category == "Sports") {
+      categoryUrl =
+          "https://opentdb.com/api.php?amount=10&category=21&difficulty=easy&type=multiple";
     }
+    api();
   }
 
   Future api() async {
